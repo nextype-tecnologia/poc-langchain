@@ -1,0 +1,29 @@
+{
+  "name": "poc-langchain",
+  "version": "1.0.0",
+  "description": "proff of concept langchain reading PDFs\r and conecting Ucondo's API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nextype-tecnologia/poc-langchain.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nextype-tecnologia/poc-langchain/issues"
+  },
+  "homepage": "https://github.com/nextype-tecnologia/poc-langchain#readme",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "langchain": "^0.3.29"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
