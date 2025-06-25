@@ -5,7 +5,7 @@ const { HumanMessage } = require('@langchain/core/messages');
 
 const chat = new ChatOpenAI({
   temperature: 0.7,
-  apiKey: process.env.OPENAI_API_KEY_IV,
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 (async () => {
