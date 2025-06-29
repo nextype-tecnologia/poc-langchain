@@ -5,9 +5,45 @@ require('dotenv').config();
 const Tesseract = require('tesseract.js');
 const { ChatOpenAI } = require('@langchain/openai');
 const { HumanMessage } = require('@langchain/core/messages');
+const { exec } = require('child_process');
+const im = require('imagemagick');
 
-async function processarImagem(linkImagem = '') {
+async function ConverterPDFImg (linkImagem = ''){
+
+  const inputPath = linkImagem;
+  const outputPath = './files_examples/temp/saida.png';
+
+  //im.convert([`${inputPath}[0]`, '-density', '300', '-quality', '100', outputPath], function(err, stdout){
+  //if (err) {
+  //  throw err;
+  //}
+  //console.log('PDF convertido com sucesso!');
+
+  await exec(`magick convert -density 300 ${inputPath}[0] ${outputPath}`, (err, stdout, stderr) => {
+      if (err) {
+        throw err;
+      }
+      console.log('Conversão concluída!');
+
+      return outputPath;
+  });
+ 
+  return outputPath;
+}
+
+async function processarImagem(linkArquivo = '') {
   try {
+
+    let linkImagem = null;
+    if (path.extname(linkArquivo).toLowerCase() === '.pdf') {
+      linkImagem = await ConverterPDFImg (linkArquivo);
+    }else{
+      linkImagem = linkArquivo;
+    }
+
+    
+    console.log(linkImagem);
+
     const { data: { text } } = await Tesseract.recognize(
       path.join(linkImagem),
       'por'
@@ -57,13 +93,12 @@ async function EnviaLangChain (leituraOCR = ''){
 
 async function main() {
   try {
-    const leituraOCR = await processarImagem('./files_examples/energiaeletrica.png');
+    const leituraOCR = await processarImagem('./files_examples/contadeagua.pdf');
 
     //console.log('\nTexto extraído da imagem:\n');
-    //console.log(texto_extraido);
+    //console.log(leituraOCR);
 
     const res = await EnviaLangChain (leituraOCR);
-
     console.log("Resposta:", res.content);
 
   } catch (error) {
